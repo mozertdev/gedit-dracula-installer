@@ -4,7 +4,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2025 - gedit-dracula-installer (gdt_installer) [mozertdev]
+# Copyright (c) 2025 gedit-dracula-installer (gdt_installer) [mozertdev]
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal

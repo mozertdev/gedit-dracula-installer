@@ -41,6 +41,33 @@ This project is an independent installation utility and is **NOT** affiliated wi
 
 ---
 
+## ⚙️ Dependencies
+
+This script relies on the following command-line utilities. The basic shell commands (`cp`, `mkdir`, `rm`, `dirname`, `readlink`) are typically pre-installed on every Linux distribution.
+
+The main external dependency is **`curl`** (for downloading theme files and checking network connectivity).
+
+### Installing Dependencies (Required: curl)
+
+If the script fails due to a missing `curl` command, use one of the following commands based on your distribution:
+
+| Distribution           | Command to Install `curl`                     |
+| ---------------------- | --------------------------------------------- |
+| **Debian/Ubuntu/Mint** | `sudo apt update && sudo apt install curl -y` |
+| **Fedora/CentOS/RHEL** | `sudo dnf install curl -y`                    |
+| **Arch/Manjaro**       | `sudo pacman -S curl`                         |
+| **openSUSE**           | `sudo zypper install curl`                    |
+
+--
+
+| Original Dependencies            | Description                                             |
+| -------------------------------- | ------------------------------------------------------- |
+| **`curl`**                       | To download theme files and check network connectivity. |
+| `cp`, `mkdir`, `rm`              | Basic Shell commands.                                   |
+| `command`, `dirname`, `readlink` | To locate and manage script paths robustly.             |
+
+---
+
 ## 🚀 Quick Installation
 
 ### One-Liner Installation (Recommended)
@@ -48,7 +75,7 @@ This project is an independent installation utility and is **NOT** affiliated wi
 To install the Dracula theme automatically, simply run the following command in your terminal. This command downloads the script and executes it directly using `bash`.
 
 ```bash
-TODO
+curl -fsSL [https://raw.githubusercontent.com/mozertdev/gedit-dracula-installer/main/gdt_installer.sh](https://raw.githubusercontent.com/mozertdev/gedit-dracula-installer/main/gdt_installer.sh) | bash
 ```
 
 ### Manually installation
@@ -58,7 +85,7 @@ Follow these simple steps to run the installer.
 1. **Clone the Repository** (or download the `gdt_installer.sh` file).
    
    ```bash
-   TODO
+   git clone [https://github.com/mozertdev/gedit-dracula-installer](https://github.com/mozertdev/gedit-dracula-installer) && cd gedit-dracula-installer
    ```
 
 2. **Grant Execution Permission**
@@ -87,33 +114,6 @@ After successful execution, you must **activate the theme** within Gedit:
 2. Click on the menu (hamburger) button and select **"Preferences"**.
 3. Go to the **"Fonts & Colors"** tab.
 4. Select **"Dracula"** from the color schemes list.
-
----
-
-## ⚙️ Dependencies
-
-This script relies on the following command-line utilities. The basic shell commands (`cp`, `mkdir`, `rm`, `dirname`, `readlink`) are typically pre-installed on every Linux distribution.
-
-The main external dependency is **`curl`** (for downloading theme files and checking network connectivity).
-
-### Installing Dependencies (Required: curl)
-
-If the script fails due to a missing `curl` command, use one of the following commands based on your distribution:
-
-| Distribution           | Command to Install `curl`                     |
-|:---------------------- |:--------------------------------------------- |
-| **Debian/Ubuntu/Mint** | `sudo apt update && sudo apt install curl -y` |
-| **Fedora/CentOS/RHEL** | `sudo dnf install curl -y`                    |
-| **Arch/Manjaro**       | `sudo pacman -S curl`                         |
-| **openSUSE**           | `sudo zypper install curl`                    |
-
---
-
-| Original Dependencies            | Description                                             |
-|:-------------------------------- |:------------------------------------------------------- |
-| **`curl`**                       | To download theme files and check network connectivity. |
-| `cp`, `mkdir`, `rm`              | Basic Shell commands.                                   |
-| `command`, `dirname`, `readlink` | To locate and manage script paths robustly.             |
 
 ---
 
