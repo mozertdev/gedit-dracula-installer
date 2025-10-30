@@ -75,7 +75,7 @@ If the script fails due to a missing `curl` command, use one of the following co
 To install the Dracula theme automatically, simply run the following command in your terminal. This command downloads the script and executes it directly using `bash`.
 
 ```bash
-curl -fsSL [https://raw.githubusercontent.com/mozertdev/gedit-dracula-installer/main/gdt_installer.sh](https://raw.githubusercontent.com/mozertdev/gedit-dracula-installer/main/gdt_installer.sh) | bash
+curl -fsSL https://raw.githubusercontent.com/mozertdev/gedit-dracula-installer/main/gdt_installer.sh | bash
 ```
 
 ### Manually installation
@@ -85,21 +85,21 @@ Follow these simple steps to run the installer.
 1. **Clone the Repository** (or download the `gdt_installer.sh` file).
    
    ```bash
-   git clone [https://github.com/mozertdev/gedit-dracula-installer](https://github.com/mozertdev/gedit-dracula-installer) && cd gedit-dracula-installer
+   git clone https://github.com/mozertdev/gedit-dracula-installer && cd gedit-dracula-installer
    ```
 
 2. **Grant Execution Permission**
    To make the script executable:
    
    ```bash
-   $ chmod +x gdt_installer.sh
+   chmod +x gdt_installer.sh
    ```
 
 3. **Run the Script**
    The script will take care of the rest automatically:
    
    ```bash
-   $ ./gdt_installer.sh
+   ./gdt_installer.sh
    ```
 
 The script will confirm checks, download the theme files, and attempt to install them in all known Gedit configuration paths.
@@ -126,7 +126,7 @@ If the script fails to install the theme (e.g., if you are using a **Snap** inst
 | **Gedit Legacy** (Repo, `< v46`)  | `dracula.xml`    | `$HOME/.local/share/gedit/styles/`                                       |
 | **Gedit Modern** (Repo, `>= v46`) | `dracula-46.xml` | `$HOME/.local/share/libgedit-gtksourceview-300/styles/`                  |
 | **Gedit Flatpak** (`>= v46`)      | `dracula-46.xml` | `$HOME/.var/app/org.gnome.gedit/data/libgedit-gtksourceview-300/styles/` |
-| **Gedit Snap (>= v46)**           | `dracula-46.xml` | `$HOME/snap/gedit/current/libgedit-gtksourceview-300/styles/`            |
+| **Gedit Snap** (`>= v46`)         | `dracula-46.xml` | `$HOME/snap/gedit/current/libgedit-gtksourceview-300/styles/`            |
 
 ### Snap Installation Note (Important)
 
@@ -134,7 +134,7 @@ Although this installer supports the Snap installation path, the nature of Snap'
 
 * **Action:** Simply **rerun `gdt_installer.sh`** after any Gedit update via Snap. 
 
-* **Alternative*:** To avoid this inconvenience, consider using the Flatpak or native package manager edition of Gedit instead.
+* **Alternative:** To avoid this inconvenience, consider using the Flatpak or native package manager edition of Gedit instead.
 
 ---
 
@@ -160,4 +160,4 @@ I am grateful to my Lord and Savior, Jesus Christ, for the opportunity to work o
 
 This project is distributed under the **MIT License**. See the script header or LICENSE for full license details.
 
-*Copyright (c) 2025 - gedit-dracula-installer (gdt_installer) [mozertdev]*
+*Copyright (c) 2025 gedit-dracula-installer (gdt_installer) [mozertdev]*

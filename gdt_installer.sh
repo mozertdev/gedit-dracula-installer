@@ -469,7 +469,7 @@ install_gdt_for_snap_modern_gedit() {
 #
 # Main entry point for the installation utility.
 # It performs pre-flight checks (connectivity and theme file readiness) and
-# attempts theme installation in all known Gedit locations (Legacy, Modern Native, Flatpak).
+# attempts theme installation in all known Gedit locations (Legacy, Modern Native, Flatpak, Snap).
 #
 # It relies on the global functions/variables:
 #   - check_connectivity()
@@ -477,6 +477,7 @@ install_gdt_for_snap_modern_gedit() {
 #   - install_gdt_for_system_old_gedit()
 #   - install_gdt_for_system_modern_gedit()
 #   - install_gdt_for_flatpak_modern_gedit()
+#   - install_gdt_for_snap_modern_gedit()
 #   - ASCII_TITLE, DISCLAIMER, STYLE_DIR, LIBGEDIT_DIR, FLATPAK_STYLE_DIR
 #
 # Parameters:
