@@ -40,7 +40,7 @@
 # This script is a simple automation tool designed to install the beautiful
 # Dracula theme for Gedit.
 #
-# The Dracula theme is an independent project created and maintained by
+# The Gedit Dracula theme is an independent project created and maintained by
 # Ricardo Madriz, Zeno Rocha, Ali Vakilzade, Benjamin Reynolds and the dedicated
 # contributors of the Dracula community.
 #
@@ -71,7 +71,7 @@
 #
 # GITHUB REPOSITORY: https://github.com/mozertdev/gedit-dracula-installer
 #
-# Dependencies: curl, cp, mkdir, cat, rm, command, dirname, readlink
+# Dependencies: curl, cp, mkdir, cat, rm, command, dirname, readlink, seq
 #
 ################################################################################
 #
@@ -121,6 +121,13 @@ fi
 if ! command -v readlink &> /dev/null; then
     echo "Error: 'readlink' command not found."
     echo "Please install 'readlink' and run the script again."
+    exit 1
+fi
+
+# seq check
+if ! command -v seq &> /dev/null; then
+    echo "Error: 'seq' command not found."
+    echo "Please install 'seq' and run the script again."
     exit 1
 fi
 
@@ -216,13 +223,14 @@ check_connectivity() {
 countdown() {
     local seconds="$1"
     
-    echo -n "Waiting $seconds seconds to respect GitHub's rate limits: "
-    
-    for ((i = seconds; i > 0; i----)); do
-        echo -ne " $i\r"
+    local clear_line="                                                                    "
+
+    for i in $(seq "$seconds" -1 1); do
+        printf "Waiting %d seconds to respect GitHub's rate limits: %2d\r" "$seconds" "$i"
         sleep 1
     done
-    echo -e "Wait complete.      "
+
+    echo -e "$clear_line\rWait complete."
 }
 
 # download_theme_file()

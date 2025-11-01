@@ -21,7 +21,7 @@ While the core functionality (downloading and installing themes for Native, Flat
 
 This project is an independent installation utility and is **NOT** affiliated with, endorsed by, or sponsored by the official Dracula theme developers or maintainers. It is provided solely as a convenience tool to simplify the setup process.
 
-**Acknowledgments:** The Dracula theme is an amazing project created and maintained by **Ricardo Madriz**, **Zeno Rocha**, **Ali Vakilzade**, **Benjamin Reynolds** and the dedicated contributors of the Dracula community.
+**Acknowledgments:** The Gedit Dracula theme is an amazing project created and maintained by **Ricardo Madriz**, **Zeno Rocha**, **Ali Vakilzade**, **Benjamin Reynolds** and the dedicated contributors of the Dracula community.
 
 * **Official Theme Repository:** [https://github.com/dracula/gedit](https://github.com/dracula/gedit)
 * **Official Theme Website:** [https://draculatheme.com/gedit](https://draculatheme.com/gedit)
@@ -34,7 +34,7 @@ This project is an independent installation utility and is **NOT** affiliated wi
   * **Legacy Native** (`< v46`): `$HOME/.local/share/gedit/styles/`
   * **Modern Native** (`>= v46`): `$HOME/.local/share/libgedit-gtksourceview-300/styles/`
   * **Flatpak** (`>= v46`): `$HOME/.var/app/org.gnome.gedit/data/libgedit-gtksourceview-300/styles/`
-  * **Snap (>= v46):** `$HOME/snap/gedit/current/libgedit-gtksourceview-300/styles/`
+  * **Snap** (`>= v46`): `$HOME/snap/gedit/current/libgedit-gtksourceview-300/styles/`
 * **Pre-flight Checks:** Verifies the availability of essential commands (`curl`,  etc.) before execution.
 * **Connectivity Check:** Ensures internet access before attempting to download the theme files.
 * **Rate Limit Handling:** Includes a 10-second pause between the download of the two theme files (`dracula.xml` and `dracula-46.xml`) to respect GitHub's rate limits.
@@ -43,7 +43,7 @@ This project is an independent installation utility and is **NOT** affiliated wi
 
 ## ⚙️ Dependencies
 
-This script relies on the following command-line utilities. The basic shell commands (`cp`, `mkdir`, `rm`, `dirname`, `readlink`) are typically pre-installed on every Linux distribution.
+This script relies on the following command-line utilities. The basic shell commands (`cp`, `mkdir`, `rm`, `dirname`, `readlink`, `seq`) are typically pre-installed on every Linux distribution (`coreutils`).
 
 The main external dependency is **`curl`** (for downloading theme files and checking network connectivity).
 
@@ -63,7 +63,7 @@ If the script fails due to a missing `curl` command, use one of the following co
 | Original Dependencies            | Description                                             |
 | -------------------------------- | ------------------------------------------------------- |
 | **`curl`**                       | To download theme files and check network connectivity. |
-| `cp`, `mkdir`, `rm`              | Basic Shell commands.                                   |
+| `cp`, `mkdir`, `rm`, `seq`       | Basic Shell commands.                                   |
 | `command`, `dirname`, `readlink` | To locate and manage script paths robustly.             |
 
 ---
