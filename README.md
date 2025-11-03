@@ -5,6 +5,8 @@
 A robust Shell script for **quick and automatic installation** of the Dracula theme in Gedit.
 This utility automates the download and installation process of the beautiful Dracula theme across all known Gedit versions and installation methods on Linux: **native** (Legacy and Modern), **Flatpak**, and **Snap** installs.
 
+![gdt_installer-screen](./gdt_installer-screen.png)
+
 ---
 
 ## ⚠️ Development Status
@@ -144,7 +146,7 @@ This installer relies on the consistent structure and naming conventions used by
 
 **Instability Risk:** Any upstream changes to the official repository—such as file name modifications, URL changes, or the introduction of new Gedit version paths—may cause this installer script to fail.
 
-**Reporting Issues:** If the script fails to execute successfully or if Gedit introduces a new version (e.g., v48) that requires a different installation path, please report the issue immediately via the repository's Issues tab.
+**Reporting Issues:** If the script fails to execute successfully or if Gedit introduces a new version (e.g., v48) that requires a different installation path, please report the issue immediately via the repository's [Issues tab](https://github.com/mozertdev/gedit-dracula-installer/issues).
 
 Your feedback is crucial for maintaining the script's compatibility with the latest Gedit releases.
 
@@ -156,8 +158,18 @@ I am grateful to my Lord and Savior, Jesus Christ, for the opportunity to work o
 
 ---
 
+### ⭐️ Support the Project
+
+If the `gdt_installer` simplified your Gedit Dracula theme setup, please consider supporting this project by **leaving a star (⭐️) on GitHub!**
+
+Your support is essential for the continuous maintenance and visibility of this project.
+
+[![GitHub star](https://img.shields.io/github/stars/mozertdev/gedit-dracula-installer?style=social)](https://github.com/mozertdev/gedit-dracula-installer/stargazers)
+
+---
+
 ## 📄 License
 
-This project is distributed under the **MIT License**. See the script header or LICENSE for full license details.
+This project is distributed under the **MIT License**. See the script header or [LICENSE](./LICENSE) for full license details.
 
 *Copyright (c) 2025 gedit-dracula-installer (gdt_installer) [mozertdev]*

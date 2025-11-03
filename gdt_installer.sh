@@ -257,25 +257,25 @@ download_theme_file() {
         return 0
     fi
     
-    echo "Downloading theme file ($theme_file_name) from $THEME_URL_BASE..."
+    echo "Downloading theme file ($theme_file_name) from '$THEME_URL_BASE'..."
     
     http_status=$(
         curl -L -s -w "%{http_code}" -o "$local_path" "$theme_url"
     )
     
     if [ "$http_status" == "200" ]; then
-        echo "Dracula theme ($theme_file_name) successfully downloaded at $SCRIPT_DIR."
+        echo "Dracula theme ($theme_file_name) successfully downloaded at '$SCRIPT_DIR'."
         return 0
     elif [ "$http_status" == "429" ]; then
-        echo "Rate Limit Exceeded (429) for $theme_file_name."
+        echo "Rate Limit Exceeded (429) for '$theme_file_name'."
         rm -f "$local_path"
         return 1
     elif [ "$http_status" == "404" ]; then
-        echo "Error: File not found (404) at $theme_url."
+        echo "Error: File not found (404) at '$theme_url'."
         rm -f "$local_path"
         return 1
     else
-        echo "Error: Failed to download theme ($theme_file_name). URL returned status code $http_status."
+        echo "Error: Failed to download theme ($theme_file_name). URL returned status code '$http_status'."
         rm -f "$local_path"
         return 1
     fi
@@ -338,20 +338,20 @@ install_gdt_for_system_old_gedit() {
     fi
     
     echo -e "\n::: System/Native - Legacy Gedit Dracula Theme Version '< v46' :::"
-    echo "Trying installation in $STYLE_DIR (Legacy Gedit Version '< v46')..."
+    echo "Trying installation in '$STYLE_DIR' (Legacy Gedit Version '< v46')..."
 
     if [ -f "$STYLE_DIR/$THEME_FILE_NAME" ]; then
         echo "It is already installed. Trying next option..."
         return 0
     fi
 
-    mkdir -p "$STYLE_DIR" || { echo "Error creating directory $STYLE_DIR."; return 1; }
+    mkdir -p "$STYLE_DIR" || { echo "Error creating directory '$STYLE_DIR'."; return 1; }
 
     if cp "$SCRIPT_DIR/$THEME_FILE_NAME" "$STYLE_DIR/$THEME_FILE_NAME"; then
-        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME) successfully installed at $STYLE_DIR."
+        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME) successfully installed at '$STYLE_DIR'."
         return 0
     else
-        echo "Failed to install theme in $STYLE_DIR (Copy failed). Trying next option..."
+        echo "Failed to install theme in '$STYLE_DIR' (Copy failed). Trying next option..."
         return 1
     fi
 }
@@ -375,20 +375,20 @@ install_gdt_for_system_modern_gedit() {
     fi
     
     echo -e "\n::: System/Native - Modern Gedit Dracula Theme Version - libgedit '>= v46' :::"
-    echo "Trying installation in $LIBGEDIT_DIR (Modern Gedit Version - libgedit '>= v46')..."
+    echo "Trying installation in '$LIBGEDIT_DIR' (Modern Gedit Version - libgedit '>= v46')..."
     
     if [ -f "$LIBGEDIT_DIR/$THEME_FILE_NAME_V46" ]; then
         echo "It is already installed. Trying next option..."
         return 0
     fi
 
-    mkdir -p "$LIBGEDIT_DIR" || { echo "Error creating directory $LIBGEDIT_DIR."; return 1; }
+    mkdir -p "$LIBGEDIT_DIR" || { echo "Error creating directory '$LIBGEDIT_DIR'."; return 1; }
 
     if cp "$SCRIPT_DIR/$THEME_FILE_NAME_V46" "$LIBGEDIT_DIR/$THEME_FILE_NAME_V46"; then
-        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME_V46) successfully installed at $LIBGEDIT_DIR."
+        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME_V46) successfully installed at '$LIBGEDIT_DIR'."
         return 0
     else
-        echo "Failed to install theme in $LIBGEDIT_DIR (Copy failed). Trying next option..."
+        echo "Failed to install theme in '$LIBGEDIT_DIR' (Copy failed). Trying next option..."
         return 1
     fi
 }
@@ -412,20 +412,20 @@ install_gdt_for_flatpak_modern_gedit() {
         return 1
     fi
     echo -e "\n::: Flatpak - Modern Gedit Dracula Theme Version - libgedit '>= v46' :::"
-    echo "Trying Flatpak installation in $FLATPAK_STYLE_DIR (Modern Gedit Version - libgedit '>= v46')..."
+    echo "Trying Flatpak installation in '$FLATPAK_STYLE_DIR' (Modern Gedit Version - libgedit '>= v46')..."
 
     if [ -f "$FLATPAK_STYLE_DIR/$THEME_FILE_NAME_V46" ]; then
         echo "It is already installed. Trying next option..."
         return 0
     fi
 
-    mkdir -p "$FLATPAK_STYLE_DIR" || { echo "Error creating directory $FLATPAK_STYLE_DIR."; return 1; }
+    mkdir -p "$FLATPAK_STYLE_DIR" || { echo "Error creating directory '$FLATPAK_STYLE_DIR'."; return 1; }
 
     if cp "$SCRIPT_DIR/$THEME_FILE_NAME_V46" "$FLATPAK_STYLE_DIR/$THEME_FILE_NAME_V46"; then
-        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME_V46) successfully installed in $FLATPAK_STYLE_DIR."
+        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME_V46) successfully installed in '$FLATPAK_STYLE_DIR'."
         return 0
     else
-        echo "Failed to install theme in $FLATPAK_STYLE_DIR. Trying next option..."
+        echo "Failed to install theme in '$FLATPAK_STYLE_DIR'. Trying next option..."
         return 1
     fi
 }
@@ -453,20 +453,20 @@ install_gdt_for_snap_modern_gedit() {
         return 1
     fi
     echo -e "\n::: Snap - Modern Gedit Dracula Theme Version - libgedit '>= v46' :::"
-    echo "Trying Snap installation in $SNAP_STYLE_DIR (Modern Gedit Version - libgedit '>= v46')..."
+    echo "Trying Snap installation in '$SNAP_STYLE_DIR' (Modern Gedit Version - libgedit '>= v46')..."
 
     if [ -f "$SNAP_STYLE_DIR/$THEME_FILE_NAME_V46" ]; then
         echo "It is already installed."
         return 0
     fi
 
-    mkdir -p "$SNAP_STYLE_DIR" || { echo "Error creating directory $SNAP_STYLE_DIR."; return 1; }
+    mkdir -p "$SNAP_STYLE_DIR" || { echo "Error creating directory '$SNAP_STYLE_DIR'."; return 1; }
 
     if cp "$SCRIPT_DIR/$THEME_FILE_NAME_V46" "$SNAP_STYLE_DIR/$THEME_FILE_NAME_V46"; then
-        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME_V46) successfully installed in $SNAP_STYLE_DIR."
+        echo "SUCCESS: Dracula theme ($THEME_FILE_NAME_V46) successfully installed in '$SNAP_STYLE_DIR'."
         return 0
     else
-        echo "Failed to install theme in $SNAP_STYLE_DIR."
+        echo "Failed to install theme in '$SNAP_STYLE_DIR'."
         return 1
     fi
 }
@@ -549,10 +549,10 @@ To activate the theme:
 
 FOR SNAP GEDIT USERS:
     Due to Snap's sandboxing, the theme is deleted with every Gedit update.
-    - To keep using Snap, simply re-run 'gtd_installer.sh' after every Gedit update.
+    - To keep using Snap, simply re-run 'gdt_installer.sh' after every Gedit update.
     - ALTERNATIVE*: 
         To avoid reinstallation, switch to the Flatpak or native package manager version of Gedit.
-        Uninstall the Snap version > install the alternative > run 'gtd_installer.sh' one final time.
+        Uninstall the Snap version > install the alternative > run 'gdt_installer.sh' one final time.
 EOF
     else
         cat << EOF
@@ -580,10 +580,10 @@ TIPS:
       If you installed Gedit (>= v46) from Snap:
       Install '$THEME_FILE_NAME_V46' in $SNAP_STYLE_DIR
         Due to Snap's sandboxing, the theme is deleted with every Gedit update.
-        - To keep using Snap, simply re-run 'gtd_installer.sh' after every Gedit update.
+        - To keep using Snap, simply re-run 'gdt_installer.sh' after every Gedit update.
         - ALTERNATIVE*:
             To avoid reinstallation, switch to the Flatpak or native package manager version of Gedit.
-            Uninstall the Snap version > install the alternative > run 'gtd_installer.sh' one final time.
+            Uninstall the Snap version > install the alternative > run 'gdt_installer.sh' one final time.
 
       FOR ALL METHODS ACTIVATE THE DRACULA THEME IN GEDIT:
       Open Gedit > Navigate to 'Preferences' > Go to the 'Fonts & Colors' tab > Select 'Dracula' from the list.
