@@ -1,11 +1,12 @@
 # 🧛 Gedit Dracula Theme Installer (gdt_installer)
 
-**v0.1.0 (beta)**
+**v0.1.0 (beta)** [![GitHub-star](https://img.shields.io/github/stars/mozertdev/gedit-dracula-installer?style=social)](https://github.com/mozertdev/gedit-dracula-installer/stargazers)
 
 A robust Shell script for **quick and automatic installation** of the Dracula theme in Gedit.
 This utility automates the download and installation process of the beautiful Dracula theme across all known Gedit versions and installation methods on Linux: **native** (Legacy and Modern), **Flatpak**, and **Snap** installs.
 
 ![gdt_installer-screen](./gdt_installer-screen.png)
+![gedit-dracula-theme-sample](./gedit-dracula-theme-sample.png)
 
 ---
 
@@ -15,7 +16,7 @@ This script is currently in **v0.1.0 (beta)** stage.
 
 While the core functionality (downloading and installing themes for Native, Flatpak, and Snap) has been thoroughly tested and is considered robust, minor edge cases or compatibility issues with future Gedit releases may occur.
 
-**Feedback is highly encouraged** to ensure the script's stability and compatibility across all major Linux distributions and Gedit versions. Please report any issues via the GitHub Issues tab.
+**Feedback is highly encouraged** to ensure the script's stability and compatibility across all major Linux distributions and Gedit versions. Please report any issues via the GitHub [Issues tab](https://github.com/mozertdev/gedit-dracula-installer/issues).
 
 ---
 
@@ -23,7 +24,7 @@ While the core functionality (downloading and installing themes for Native, Flat
 
 This project is an independent installation utility and is **NOT** affiliated with, endorsed by, or sponsored by the official Dracula theme developers or maintainers. It is provided solely as a convenience tool to simplify the setup process.
 
-**Acknowledgments:** The Gedit Dracula theme is an amazing project created and maintained by **Ricardo Madriz**, **Zeno Rocha**, **Ali Vakilzade**, **Benjamin Reynolds** and the dedicated contributors of the Dracula community.
+**Acknowledgments:** The Gedit Dracula theme is an amazing project created and maintained by **Ricardo Madriz**, **Zeno Rocha** and the dedicated contributors of the Dracula community.
 
 * **Official Theme Repository:** [https://github.com/dracula/gedit](https://github.com/dracula/gedit)
 * **Official Theme Website:** [https://draculatheme.com/gedit](https://draculatheme.com/gedit)
@@ -45,7 +46,7 @@ This project is an independent installation utility and is **NOT** affiliated wi
 
 ## ⚙️ Dependencies
 
-This script relies on the following command-line utilities. The basic shell commands (`cp`, `mkdir`, `rm`, `dirname`, `readlink`, `seq`) are typically pre-installed on every Linux distribution (`coreutils`).
+This script relies on the following command-line utilities. The basic shell commands (`cp`, `mkdir`, `rm`, `cat`, `dirname`, `readlink`, `seq`) are typically pre-installed on every Linux distribution (`coreutils`).
 
 The main external dependency is **`curl`** (for downloading theme files and checking network connectivity).
 
@@ -111,6 +112,8 @@ The script will confirm checks, download the theme files, and attempt to install
 ## 🎨 Activation in Gedit
 
 After successful execution, you must **activate the theme** within Gedit:
+
+*PS: If Gedit is already open, close it and open it again.*
 
 1. Open **Gedit**.
 2. Click on the menu (hamburger) button and select **"Preferences"**.

@@ -41,8 +41,8 @@
 # Dracula theme for Gedit.
 #
 # The Gedit Dracula theme is an independent project created and maintained by
-# Ricardo Madriz, Zeno Rocha, Ali Vakilzade, Benjamin Reynolds and the dedicated
-# contributors of the Dracula community.
+# Ricardo Madriz, Zeno Rocha and the dedicated contributors of the Dracula
+# community.
 #
 # PROJECT CREATORS: Ricardo Madriz, Zeno Rocha and the Dracula Theme
 #                   Contributors.
@@ -309,6 +309,11 @@ check_theme_files() {
         return 1
     fi
     
+    if [[ -f "$SCRIPT_DIR/$THEME_FILE_NAME" && -f "$SCRIPT_DIR/$THEME_FILE_NAME_V46" ]]; then
+        echo "Theme files ready."
+        return 0
+    fi
+    
     countdown 10
     
     if ! download_theme_file "$THEME_FILE_NAME_V46"; then
@@ -541,6 +546,8 @@ main(){
 SUCCESS: Gedit Dracula Theme installation complete!
 
 To activate the theme:
+*PS: If Gedit is already open, close it and open it again.
+
 1 - Open Gedit;
 2 - Click on the menu button (hamburger icon);
 3 - Click on 'Preferences';
@@ -586,6 +593,7 @@ TIPS:
             Uninstall the Snap version > install the alternative > run 'gdt_installer.sh' one final time.
 
       FOR ALL METHODS ACTIVATE THE DRACULA THEME IN GEDIT:
+      *PS: If Gedit is already open, close it and open it again.
       Open Gedit > Navigate to 'Preferences' > Go to the 'Fonts & Colors' tab > Select 'Dracula' from the list.
 EOF
     fi
