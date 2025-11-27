@@ -67,11 +67,28 @@
 #
 # AUTHOR: Mozert M. Ramalho (mozertdev)
 # DATE: 2025/10/28
+# LAST UPDATE: 2025/11/27
 # LICENSE: MIT (See LICENSE file for details)
 #
 # GITHUB REPOSITORY: https://github.com/mozertdev/gedit-dracula-installer
 #
-# Dependencies: curl, cp, mkdir, cat, rm, command, dirname, readlink, seq
+# Dependencies: curl, cp, mkdir, cat, rm, command, dirname, readlink, seq,
+#               printf, sleep
+#
+#               - Debian/Ubuntu/Mint/Zorin (apt):
+#                   sudo apt update && sudo apt install curl coreutils
+#               - Fedora/RHEL/CentOS (dnf/yum):
+#                   sudo dnf install curl coreutils
+#               OpenSUSE (zypper):
+#                   sudo zypper refresh && sudo zypper install curl coreutils
+#               Arch/Manjaro (pacman):
+#                   sudo pacman -Syu curl coreutils
+#
+# --- IMPORTANT PRE-REQUISITE ---
+# **Gedit must be installed and must have been executed at least once.**
+# Running Gedit ensures that all necessary configuration directories (Native,
+# Flatpak or Snap) are created in the user's home folder, allowing the script
+# to find and install the theme correctly.
 #
 ################################################################################
 #
@@ -101,33 +118,50 @@
 # -o pipefail: Fail if any command in a pipeline fails.
 set -euo pipefail
 
-### --- Dependences ---
+### --- Dependences Check ---
 
-# curl check
-if ! command -v curl &> /dev/null; then
-    echo "Error: 'curl' command not found."
-    echo "Please install 'curl' and run the script again."
-    exit 1
-fi
+# List of required commands to be tested. 
+# 'cp', 'mkdir', 'cat', 'rm', 'dirname', 'readlink', 'seq', 'printf' and 'sleep'
+# are usually shell built-ins or coreutils, but are included for maximum
+# robustness check.
+REQUIRED_COMMANDS=(
+    "curl"
+    "cp"
+    "mkdir"
+    "cat"
+    "rm"
+    "dirname"
+    "readlink"
+    "seq"
+    "printf"
+    "sleep"
+)
+MISSING_COMMANDS=()
 
-# dirname check
-if ! command -v dirname &> /dev/null; then
-    echo "Error: 'dirname' command not found."
-    echo "Please install 'dirname' and run the script again."
-    exit 1
-fi
+# Check for each dependency
+for cmd in "${REQUIRED_COMMANDS[@]}"; do
+    if ! command -v "$cmd" &> /dev/null; then
+        MISSING_COMMANDS+=("$cmd")
+    fi
+done
 
-# readlink check
-if ! command -v readlink &> /dev/null; then
-    echo "Error: 'readlink' command not found."
-    echo "Please install 'readlink' and run the script again."
-    exit 1
-fi
-
-# seq check
-if ! command -v seq &> /dev/null; then
-    echo "Error: 'seq' command not found."
-    echo "Please install 'seq' and run the script again."
+# If there are missing commands, report the error and suggest installation.
+if [ ${#MISSING_COMMANDS[@]} -ne 0 ]; then
+    echo "--- ERROR: Missing Dependencies ---" >&2
+    echo "The following required commands were not found: ${MISSING_COMMANDS[*]}" >&2
+    echo "" >&2
+    echo "Please install the missing dependencies and run the script again." >&2
+    echo "Installation tips for common Linux distributions:" >&2
+    echo "" >&2
+    echo "  - Debian/Ubuntu/Mint/Zorin (apt):" >&2
+    echo "    sudo apt update && sudo apt install curl coreutils" >&2
+    echo "  - Fedora/RHEL/CentOS (dnf/yum):" >&2
+    echo "    sudo dnf install curl coreutils" >&2
+    echo "  - OpenSUSE (zypper):" >&2
+    echo "    sudo zypper refresh && sudo zypper install curl coreutils" >&2
+    echo "  - Arch/Manjaro (pacman):" >&2
+    echo "    sudo pacman -Syu curl coreutils" >&2
+    echo "-------------------------------------" >&2
     exit 1
 fi
 
@@ -157,7 +191,71 @@ DISCLAIMER=$(cat <<'EOF_DISCLAIMER'
   It is provided solely as a convenience tool to simplify the installation
   and setup process.
 ================================================================================
+  --- IMPORTANT PRE-REQUISITE ---
+  **Gedit must be installed and must have been executed at least once.**
+  Running Gedit ensures that all necessary configuration directories (Native,
+  Flatpak or Snap) are created in the user's home folder, allowing the script
+  to find and install the theme correctly.
+================================================================================
 EOF_DISCLAIMER
+)
+
+INSTALLATION_SUCCESS_MSG=$(cat <<'EOF_SUCESS'
+
+SUCCESS: Gedit Dracula Theme installation complete!
+
+To activate the theme:
+*PS: If Gedit is already open, close it and open it again.
+
+1 - Open Gedit;
+2 - Click on the menu button (hamburger icon);
+3 - Click on 'Preferences';
+4 - Click on 'Fonts & Colors' tab;
+5 - Select the 'Dracula' theme.
+
+FOR SNAP GEDIT USERS:
+    Due to Snap's sandboxing, the theme is deleted with every Gedit update.
+    - To keep using Snap, simply re-run 'gdt_installer.sh' after every Gedit update.
+    - ALTERNATIVE*: 
+        To avoid reinstallation, switch to the Flatpak or native package manager version of Gedit.
+        Uninstall the Snap version > install the alternative > run 'gdt_installer.sh' one final time.
+EOF_SUCESS
+)
+
+INSTALLATION_FAILED_MSG=$(cat <<'EOF_FAILED'
+
+FAILED: Installation failed in all possible directories.
+
+Please verify your Gedit installation path and try again.
+If you are having difficulties downloading/installing the theme try install it manually:
+- Download it directly from the official Github repository: https://github.com/dracula/gedit
+- Or from official website: https://draculatheme.com/gedit
+- Follow 'INSTALL.md' instructions of https://github.com/dracula/gedit or
+  see 'README.md' Troubleshooting section of gdt_installer.
+
+TIPS:
+
+      If you installed Gedit (< v46) from your Linux distribution repository:
+      Install '$THEME_FILE_NAME' in $STYLE_DIR
+
+      If you installed Gedit (>= v46) from your Linux distribution repository:
+      Install '$THEME_FILE_NAME_V46' in $LIBGEDIT_DIR
+
+      If you installed Gedit (>= v46) from Flatpak:
+      Install '$THEME_FILE_NAME_V46' in $FLATPAK_STYLE_DIR
+      
+      If you installed Gedit (>= v46) from Snap:
+      Install '$THEME_FILE_NAME_V46' in $SNAP_STYLE_DIR
+        Due to Snap's sandboxing, the theme is deleted with every Gedit update.
+        - To keep using Snap, simply re-run 'gdt_installer.sh' after every Gedit update.
+        - ALTERNATIVE*:
+            To avoid reinstallation, switch to the Flatpak or native package manager version of Gedit.
+            Uninstall the Snap version > install the alternative > run 'gdt_installer.sh' one final time.
+
+      FOR ALL METHODS ACTIVATE THE DRACULA THEME IN GEDIT:
+      *PS: If Gedit is already open, close it and open it again.
+      Open Gedit > Navigate to 'Preferences' > Go to the 'Fonts & Colors' tab > Select 'Dracula' from the list.
+EOF_FAILED
 )
 
 ## Theme file names and remote URL base
@@ -338,7 +436,17 @@ check_theme_files() {
 #   0 - Success: Theme installed, or theme already exists.
 #   1 - Failure: 'gedit' command is not found, or directory creation/file copy failed.
 install_gdt_for_system_old_gedit() {
-    if ! command -v gedit &> /dev/null; then
+    local gedit_path
+    if ! gedit_path=$(command -v gedit); then
+        return 1
+    fi
+    
+    local real_gedit_path
+    if ! real_gedit_path=$(readlink -f "$gedit_path"); then
+        real_gedit_path="$gedit_path"
+    fi
+    
+    if ! [[ "$real_gedit_path" =~ ^/usr/bin/ || "$real_gedit_path" =~ ^/bin/ ]]; then
         return 1
     fi
     
@@ -375,7 +483,17 @@ install_gdt_for_system_old_gedit() {
 #   0 - Success: Theme installed, or theme already exists.
 #   1 - Failure: 'gedit' command is not found, or directory creation/file copy failed.
 install_gdt_for_system_modern_gedit() {
-    if ! command -v gedit &> /dev/null; then
+    local gedit_path
+    if ! gedit_path=$(command -v gedit); then
+        return 1
+    fi
+    
+    local real_gedit_path
+    if ! real_gedit_path=$(readlink -f "$gedit_path"); then
+        real_gedit_path="$gedit_path"
+    fi
+    
+    if ! [[ "$real_gedit_path" =~ ^/usr/bin/ || "$real_gedit_path" =~ ^/bin/ ]]; then
         return 1
     fi
     
@@ -476,6 +594,48 @@ install_gdt_for_snap_modern_gedit() {
     fi
 }
 
+# cleanup_local_files()
+#
+# Prompts the user to decide whether to keep the downloaded theme files 
+# in the script's directory ($SCRIPT_DIR) or delete them.
+#
+# It relies on the global variables: SCRIPT_DIR, THEME_FILE_NAME, 
+# and THEME_FILE_NAME_V46.
+#
+# Parameters:
+#   None
+#
+# Returns:
+#   0 - Success: Clean-up process completed (files deleted or kept).
+cleanup_local_files() {
+    if [[ ! -f "$SCRIPT_DIR/$THEME_FILE_NAME" && ! -f "$SCRIPT_DIR/$THEME_FILE_NAME_V46" ]]; then
+        echo -e "\nNo theme files were found locally to clean up."
+        return 0
+    fi
+
+    echo ""
+    read -r -p "Do you want to delete the downloaded theme files from '$SCRIPT_DIR'? (y/N): " response
+
+    case "$response" in
+        [yY][eE][sS]|[yY]) 
+            echo "Deleting temporary theme files..."
+            
+            rm -f "$SCRIPT_DIR/$THEME_FILE_NAME" "$SCRIPT_DIR/$THEME_FILE_NAME_V46"
+            
+            if [ $? -eq 0 ]; then
+                echo "Clean-up successful. Files removed."
+            else
+                echo "Warning: Could not delete all files. Please check permissions." >&2
+            fi
+            ;;
+        *)
+            echo "Keeping theme files in '$SCRIPT_DIR'."
+            ;;
+    esac
+
+    return 0
+}
+
 ### --- Main Logic ---
 
 # main()
@@ -491,7 +651,8 @@ install_gdt_for_snap_modern_gedit() {
 #   - install_gdt_for_system_modern_gedit()
 #   - install_gdt_for_flatpak_modern_gedit()
 #   - install_gdt_for_snap_modern_gedit()
-#   - ASCII_TITLE, DISCLAIMER, STYLE_DIR, LIBGEDIT_DIR, FLATPAK_STYLE_DIR
+#   - cleanup_local_files()
+#   - ASCII_TITLE, DISCLAIMER, STYLE_DIR, LIBGEDIT_DIR, FLATPAK_STYLE_DIR, ETC...
 #
 # Parameters:
 #   None
@@ -517,7 +678,7 @@ main(){
 
     echo -e "\n--- Installation Attempts ---"
     INSTALLED=0
-    
+
     # Installation for older Gedit versions (< 46, system/native install)
     if install_gdt_for_system_old_gedit; then
         INSTALLED=1
@@ -538,64 +699,15 @@ main(){
         INSTALLED=1
     fi
 
-# Final Result
+    echo -e "\n--- Clean-up ---"
+    cleanup_local_files
+
+    # Final Result
     echo -e "\n--- Summary ---"
     if [ "$INSTALLED" -eq 1 ]; then
-        cat << EOF
-
-SUCCESS: Gedit Dracula Theme installation complete!
-
-To activate the theme:
-*PS: If Gedit is already open, close it and open it again.
-
-1 - Open Gedit;
-2 - Click on the menu button (hamburger icon);
-3 - Click on 'Preferences';
-4 - Click on 'Fonts & Colors' tab;
-5 - Select the 'Dracula' theme.
-
-FOR SNAP GEDIT USERS:
-    Due to Snap's sandboxing, the theme is deleted with every Gedit update.
-    - To keep using Snap, simply re-run 'gdt_installer.sh' after every Gedit update.
-    - ALTERNATIVE*: 
-        To avoid reinstallation, switch to the Flatpak or native package manager version of Gedit.
-        Uninstall the Snap version > install the alternative > run 'gdt_installer.sh' one final time.
-EOF
+        echo "$INSTALLATION_SUCCESS_MSG"
     else
-        cat << EOF
-
-FAILED: Installation failed in all possible directories.
-
-Please verify your Gedit installation path and try again.
-If you are having difficulties downloading/installing the theme try install it manually:
-- Download it directly from the official Github repository: https://github.com/dracula/gedit
-- Or from official website: https://draculatheme.com/gedit
-- Follow 'INSTALL.md' instructions of https://github.com/dracula/gedit or
-  see 'README.md' Troubleshooting section of gdt_installer.
-
-TIPS:
-
-      If you installed Gedit (< v46) from your Linux distribution repository:
-      Install '$THEME_FILE_NAME' in $STYLE_DIR
-
-      If you installed Gedit (>= v46) from your Linux distribution repository:
-      Install '$THEME_FILE_NAME_V46' in $LIBGEDIT_DIR
-
-      If you installed Gedit (>= v46) from Flatpak:
-      Install '$THEME_FILE_NAME_V46' in $FLATPAK_STYLE_DIR
-      
-      If you installed Gedit (>= v46) from Snap:
-      Install '$THEME_FILE_NAME_V46' in $SNAP_STYLE_DIR
-        Due to Snap's sandboxing, the theme is deleted with every Gedit update.
-        - To keep using Snap, simply re-run 'gdt_installer.sh' after every Gedit update.
-        - ALTERNATIVE*:
-            To avoid reinstallation, switch to the Flatpak or native package manager version of Gedit.
-            Uninstall the Snap version > install the alternative > run 'gdt_installer.sh' one final time.
-
-      FOR ALL METHODS ACTIVATE THE DRACULA THEME IN GEDIT:
-      *PS: If Gedit is already open, close it and open it again.
-      Open Gedit > Navigate to 'Preferences' > Go to the 'Fonts & Colors' tab > Select 'Dracula' from the list.
-EOF
+        echo "$INSTALLATION_FAILED_MSG"
     fi
 
     echo -e "\n---"

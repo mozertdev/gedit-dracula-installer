@@ -46,28 +46,31 @@ This project is an independent installation utility and is **NOT** affiliated wi
 
 ## ⚙️ Dependencies
 
-This script relies on the following command-line utilities. The basic shell commands (`cp`, `mkdir`, `rm`, `cat`, `dirname`, `readlink`, `seq`) are typically pre-installed on every Linux distribution (`coreutils`).
+This script relies on several standard command-line utilities for execution. All dependencies are checked automatically upon script launch, and an error message with installation instructions will be displayed if any are missing.
 
-The main external dependency is **`curl`** (for downloading theme files and checking network connectivity).
+### :: Important Pre-requisite ::
 
-### Installing Dependencies (Required: curl)
+For the script to work correctly, **Gedit must be installed and must have been executed at least once** on your system (Native, Flatpak or Snap installation). Running Gedit ensures that all necessary configuration directories are created in the user's home folder, allowing the script to find and install the theme correctly.
 
-If the script fails due to a missing `curl` command, use one of the following commands based on your distribution:
+### Required Utilities
 
-| Distribution           | Command to Install `curl`                     |
-| ---------------------- | --------------------------------------------- |
-| **Debian/Ubuntu/Mint** | `sudo apt update && sudo apt install curl -y` |
-| **Fedora/CentOS/RHEL** | `sudo dnf install curl -y`                    |
-| **Arch/Manjaro**       | `sudo pacman -S curl`                         |
-| **openSUSE**           | `sudo zypper install curl`                    |
+| Utility         | Purpose                                                                                                                                                                                                                                                      |
+|:--------------- |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **`curl`**      | Mandatory for network connectivity checks and downloading theme files.                                                                                                                                                                                       |
+| **`coreutils`** | Contains essential basic commands such as (`cp`, `mkdir`, `rm`, `cat`, `seq`, `dirname`, `readlink`, `printf`, `sleep`). These are generally pre-installed on every Linux distribution, but are included in the verification process for maximum robustness. |
 
---
+### Installing Missing Dependencies (Required: curl & coreutils)
 
-| Original Dependencies            | Description                                             |
-| -------------------------------- | ------------------------------------------------------- |
-| **`curl`**                       | To download theme files and check network connectivity. |
-| `cp`, `mkdir`, `rm`, `seq`       | Basic Shell commands.                                   |
-| `command`, `dirname`, `readlink` | To locate and manage script paths robustly.             |
+If the script detects missing dependencies, you will need to install the **`curl`** package and ensure the **`coreutils`** package is fully installed (or not damaged).
+
+Use one of the following commands based on your Linux distribution to ensure both packages are available:
+
+| Distribution                 | Package Manager | Command to Install `curl` and `coreutils`                   |
+|:---------------------------- |:--------------- |:----------------------------------------------------------- |
+| **Debian/Ubuntu/Mint/Zorin** | `apt`           | `sudo apt update && sudo apt install curl coreutils -y`     |
+| **Fedora/CentOS/RHEL**       | `dnf`           | `sudo dnf install curl coreutils -y`                        |
+| **Arch/Manjaro**             | `pacman`        | `sudo pacman -Syu curl coreutils`                           |
+| **openSUSE**                 | `zypper`        | `sudo zypper refresh && sudo zypper install curl coreutils` |
 
 ---
 
